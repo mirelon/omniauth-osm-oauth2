@@ -44,6 +44,11 @@ List of required changes (may be app-specific):
 * app/controllers/omniauth_callbacks_controller.rb: `def osm` -> `def osm_oauth2`
 * app/models/user.rb: `:omniauth_providers => [:osm]` -> `:omniauth_providers => [:osm_oauth2]`
 
+Then the following needs to be run (otherwise a new user would be created when signing in):
+```rb
+User.where(provider: :osm).update_all(provider: :osm_oauth2)
+```
+
 ## Configuring
 
 TODO: Write usage instructions here
